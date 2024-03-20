@@ -26,7 +26,13 @@ export class AuthController {
         }
 
         body.password = await bcrypt.hash(body.password,12);
-        return this.userService.create(body);
+        const {...data}= body;
+        return this.userService.create(
+            {
+                ...data,
+                role:{id:1}
+            }
+        );
     }
 
     @Post('login')

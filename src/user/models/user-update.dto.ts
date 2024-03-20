@@ -5,4 +5,5 @@ export class UserUpdateDto{
     last_name?:string;
     @IsEmail()
     email?:string
+    role_id?:number
 }
