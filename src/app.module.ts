@@ -5,6 +5,8 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
+import { PermissionModule } from './permission/permission.module';
+import { PremissionController } from './premission/premission.controller';
 
 @Module({
   imports: [
@@ -21,9 +23,10 @@ import { RoleModule } from './role/role.module';
       synchronize: true,
     }),
     AuthModule,
-    RoleModule
+    RoleModule,
+    PermissionModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, PremissionController],
   providers: [AppService],
 })
 export class AppModule {}
