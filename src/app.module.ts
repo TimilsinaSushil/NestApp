@@ -6,7 +6,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
-import { PremissionController } from './premission/premission.controller';
 
 @Module({
   imports: [
@@ -26,7 +25,7 @@ import { PremissionController } from './premission/premission.controller';
     RoleModule,
     PermissionModule
   ],
-  controllers: [AppController, PremissionController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

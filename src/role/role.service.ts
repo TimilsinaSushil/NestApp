@@ -13,15 +13,24 @@ export class RoleService {
     }
 
     async all(): Promise<Role[]>{
-        return this.roleRepository.find();
+        return this.roleRepository.find({
+            relations:{
+                permissions:true
+            }
+        });
     }
 
     async create(data): Promise<Role>{
         return this.roleRepository.save(data)
     } 
 
-    async findOne(condition):Promise<Role>{
-        return this.roleRepository.findOne(condition)
+    async findOne(id):Promise<Role>{
+        return this.roleRepository.findOne({
+            where:{id:id},
+            relations: {
+                permissions:true
+            } }
+        );
     }
 
     async update(id:number,data):Promise<any>{
