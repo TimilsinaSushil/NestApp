@@ -16,6 +16,7 @@ export class UserService {
 
     async paginate(page:number=1):Promise<any>{
         const take=2;
+        try{
         const[users,total]= await this.userRepository.findAndCount({
             take,
             skip: (page - 1) * take
@@ -28,6 +29,10 @@ export class UserService {
                 last_page:Math.ceil(total/take)
             }
         }
+    }catch (error){
+        console.error("Error fetching users", error)
+        throw new Error("Failed to fetch users");
+    }
     }
 
     async create(data): Promise<User>{
