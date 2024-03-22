@@ -13,7 +13,7 @@ export class RoleController {
     @Get()
     
     async all(){
-        return this.roleService.all()
+        return this.roleService.all(['permissions'])
     }
     @Post()
     async create(
@@ -28,7 +28,7 @@ export class RoleController {
 
     @Get(':id')
     async get(@Param('id') id:number){
-        return this.roleService.findOne(id)
+        return this.roleService.findOne(id,['permissions'])
     }
   
     @Put(':id')
@@ -51,4 +51,4 @@ export class RoleController {
     }
 
 } 
- 
+  
