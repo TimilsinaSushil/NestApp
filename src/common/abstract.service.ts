@@ -53,6 +53,12 @@ export abstract class AbstractService {
         });
     }
 
+    async findByCondition(condition):Promise<any>{
+        return this.repository.findOne(
+           condition
+        );
+    }
+
     async update(id:number,data):Promise<any>{
         return this.repository.update(id, data);
     }

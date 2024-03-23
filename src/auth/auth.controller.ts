@@ -5,6 +5,7 @@ import { RegisterDto } from './models/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import {Request, Response} from 'express'
 import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
 
 
 @UseInterceptors(ClassSerializerInterceptor)  //excludes attributes specified as exclude in model
@@ -13,7 +14,8 @@ export class AuthController {
 
     constructor(
         private userService:UserService,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private authService: AuthService
         
         ){
 
@@ -30,7 +32,7 @@ export class AuthController {
         return this.userService.create(
             {
                 ...data,
-                role:{id:1}
+                role:{id:7}
             }
         );
     }
@@ -41,7 +43,7 @@ export class AuthController {
         @Body('password') password:string,
         @Res({passthrough:true}) response: Response  //to send generated cookie in response
     ){
-        const user = await this.userService.findOne({where:{email}});
+        const user = await this.userService.findByCondition({where:{email}});
 
         if(!user){
             throw new NotFoundException('User not found');
@@ -59,9 +61,8 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Get('user')
     async user(@Req() request:Request){
-        const cookie = request.cookies['jwt']
-        const data = await this.jwtService.verifyAsync(cookie)
-        const user = this.userService.findOne({where:{id: data.id}})
+        const id = await this.authService.userId(request)
+        const user = this.userService.findByCondition({where:{id}})
         return user;
     }
 
